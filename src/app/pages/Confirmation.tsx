@@ -31,7 +31,7 @@ Seats        : ${latestBooking.seats.map(s => s.id).join(", ")}
 Thank you for choosing VisionX Cinema!`;
 
     const element = document.createElement("a");
-    const file = new Blob([ticketDetails], {type: 'text/plain'});
+    const file = new Blob([ticketDetails], { type: 'text/plain' });
     element.href = URL.createObjectURL(file);
     element.download = `VisionX_Ticket_${bookingId}.txt`;
     document.body.appendChild(element);
@@ -42,7 +42,7 @@ Thank you for choosing VisionX Cinema!`;
   return (
     <div className="flex-1 bg-black py-16 px-6 flex items-center justify-center">
       <div className="w-full max-w-2xl bg-zinc-900 border border-zinc-800 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
-        
+
         {/* Decorative elements */}
         <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-red-600 to-red-900" />
         <div className="absolute top-1/2 left-0 w-4 h-8 bg-black rounded-r-full -translate-y-1/2 border-r border-t border-b border-zinc-800" />
@@ -60,13 +60,13 @@ Thank you for choosing VisionX Cinema!`;
         <div className="border-t border-b border-zinc-800 border-dashed py-8 mb-8">
           <div className="flex flex-col md:flex-row gap-8 items-center">
             <img src={latestBooking.poster} alt={latestBooking.movieTitle} className="w-32 rounded-xl shadow-lg border border-zinc-800" />
-            
+
             <div className="flex-1 space-y-4 w-full">
               <div>
                 <h3 className="text-2xl font-bold text-white">{latestBooking.movieTitle}</h3>
                 <p className="text-zinc-400">{latestBooking.cinema} • {latestBooking.hall}</p>
               </div>
-              
+
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <p className="text-xs font-bold text-zinc-500 uppercase tracking-wider mb-1">Date</p>
@@ -94,7 +94,7 @@ Thank you for choosing VisionX Cinema!`;
         </div>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <button 
+          <button
             onClick={handleDownload}
             className="flex items-center justify-center gap-2 px-8 py-3.5 bg-zinc-800 hover:bg-zinc-700 text-white rounded-xl font-bold transition-colors"
           >
