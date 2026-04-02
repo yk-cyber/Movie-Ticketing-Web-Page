@@ -1,7 +1,9 @@
 {
   "name": "@figma/my-make-file",
   "private": true,
-  "version": "0.0.1",
+  "name": "movie-ticketing-web-page",
+  "version": "0.1.0",
+  "homepage": "https://yk-cyber.github.io/movie-ticketing-web-page/",
   "type": "module",
   "scripts": {
   "dev": "vite",
