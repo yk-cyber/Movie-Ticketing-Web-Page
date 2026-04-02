@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { useAppContext } from "../context";
-import { CreditCard, Wallet, Film, ArrowLeft } from "lucide-react";
+import { CreditCard, Wallet, Film, ArrowLeft, Smartphone } from "lucide-react";
 
 export const Checkout = () => {
   const navigate = useNavigate();
@@ -52,7 +52,7 @@ export const Checkout = () => {
           <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 shadow-2xl">
             <h3 className="text-lg font-bold mb-6 text-zinc-300 border-b border-zinc-800 pb-4">Payment Method</h3>
             
-            <div className="grid grid-cols-2 gap-4 mb-8">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
               <button
                 type="button"
                 onClick={() => setMethod("card")}
@@ -74,6 +74,17 @@ export const Checkout = () => {
                 }`}
               >
                 <Wallet className="w-6 h-6" /> Digital Wallet
+              </button>
+              <button
+                type="button"
+                onClick={() => setMethod("tng")}
+                className={`py-4 rounded-xl font-bold transition-all border flex flex-col items-center justify-center gap-2 ${
+                  method === "tng" 
+                    ? 'bg-red-600/10 border-red-500 text-red-400 shadow-inner' 
+                    : 'bg-zinc-950 border-zinc-800 text-zinc-500 hover:bg-zinc-800 hover:text-zinc-300'
+                }`}
+              >
+                <Smartphone className="w-6 h-6" /> Touch 'n Go
               </button>
             </div>
 
@@ -154,6 +165,14 @@ export const Checkout = () => {
                 <div className="animate-in fade-in zoom-in duration-300 bg-zinc-950 border border-zinc-800 rounded-xl p-8 text-center text-zinc-400">
                   <Wallet className="w-12 h-12 mx-auto mb-4 opacity-50" />
                   <p>You will be redirected to your digital wallet app to authorize the payment.</p>
+                </div>
+              )}
+
+              {method === "tng" && (
+                <div className="animate-in fade-in zoom-in duration-300 bg-[#004a99]/10 border border-[#004a99]/30 rounded-xl p-8 text-center text-zinc-300">
+                  <Smartphone className="w-12 h-12 mx-auto mb-4 text-[#004a99]" />
+                  <p className="font-medium text-white mb-2">Touch 'n Go eWallet</p>
+                  <p className="text-sm text-zinc-400">Open your Touch 'n Go eWallet app and scan the QR code to proceed with payment.</p>
                 </div>
               )}
 

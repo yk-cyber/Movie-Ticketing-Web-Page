@@ -17,6 +17,28 @@ export const Confirmation = () => {
 
   const bookingId = Math.random().toString(36).substring(2, 10).toUpperCase();
 
+  const handleDownload = () => {
+    const ticketDetails = `VISIONX CINEMA - E-TICKET
+-------------------------------------
+Booking ID   : ${bookingId}
+Movie        : ${latestBooking.movieTitle}
+Cinema       : ${latestBooking.cinema}
+Hall         : ${latestBooking.hall}
+Date         : ${latestBooking.date}
+Time         : ${latestBooking.time}
+Seats        : ${latestBooking.seats.map(s => s.id).join(", ")}
+-------------------------------------
+Thank you for choosing VisionX Cinema!`;
+
+    const element = document.createElement("a");
+    const file = new Blob([ticketDetails], {type: 'text/plain'});
+    element.href = URL.createObjectURL(file);
+    element.download = `VisionX_Ticket_${bookingId}.txt`;
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+  };
+
   return (
     <div className="flex-1 bg-black py-16 px-6 flex items-center justify-center">
       <div className="w-full max-w-2xl bg-zinc-900 border border-zinc-800 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
@@ -72,7 +94,10 @@ export const Confirmation = () => {
         </div>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <button className="flex items-center justify-center gap-2 px-8 py-3.5 bg-zinc-800 hover:bg-zinc-700 text-white rounded-xl font-bold transition-colors">
+          <button 
+            onClick={handleDownload}
+            className="flex items-center justify-center gap-2 px-8 py-3.5 bg-zinc-800 hover:bg-zinc-700 text-white rounded-xl font-bold transition-colors"
+          >
             <Download className="w-5 h-5" /> Download E-Ticket
           </button>
           <Link to="/" className="flex items-center justify-center gap-2 px-8 py-3.5 bg-red-600 hover:bg-red-700 text-white rounded-xl font-bold transition-colors shadow-lg shadow-red-900/30">
