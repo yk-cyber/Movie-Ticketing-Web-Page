@@ -7,7 +7,7 @@ export const Footer = () => {
         <div>
           <div className="flex items-center gap-2 text-xl font-bold text-white mb-4">
             <Film className="w-6 h-6 text-red-600" />
-            <span>VIsionX Cinema</span>
+            <span>VisionX Cinema</span>
           </div>
           <p className="text-sm text-zinc-500 max-w-xs">
             Experience the magic of cinema with seamless ticketing and unbeatable comfort.
@@ -42,7 +42,7 @@ export const Footer = () => {
         </div>
       </div>
       <div className="max-w-7xl mx-auto px-6 mt-12 pt-8 border-t border-zinc-900 text-sm text-center text-zinc-600">
-        © {new Date().getFullYear()} VIsionX Cinema Inc. All rights reserved.
+        © {new Date().getFullYear()} VisionX Cinema Inc. All rights reserved.
       </div>
     </footer>
   );

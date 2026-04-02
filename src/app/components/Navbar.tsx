@@ -28,7 +28,7 @@ export const Navbar = () => {
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 text-2xl font-bold tracking-tighter hover:text-red-500 transition-colors">
           <Film className="w-8 h-8 text-red-600" />
-          <span>VIsionX Cinema</span>
+          <span>VisionX Cinema</span>
         </Link>
         
         <form onSubmit={handleSearch} className="flex-1 max-w-xl mx-8 hidden md:block relative">
