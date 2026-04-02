@@ -7,7 +7,7 @@ export const Home = () => {
   const [selectedFilter, setSelectedFilter] = useState<string>("All");
   const location = useLocation();
   
-  const categories = ["All", "Action", "Romance", "Sci-Fi", "Horror", "Drama", "Comedy", "Thriller"];
+  const categories = ["All", "Action", "Romance", "Sci-Fi", "Drama", "Comedy", "Thriller"];
   
   const searchParams = new URLSearchParams(location.search);
   const searchQuery = searchParams.get("q")?.toLowerCase() || "";
@@ -54,9 +54,6 @@ export const Home = () => {
               <Link to={`/movie/${movies[0].id}`} className="bg-white hover:bg-zinc-200 text-black px-8 py-3 rounded-full font-bold transition-all flex items-center gap-2">
                 Book Tickets
               </Link>
-              <button className="border border-zinc-600 hover:border-white hover:bg-white/10 text-white px-8 py-3 rounded-full font-bold transition-all flex items-center gap-2">
-                <PlayCircle className="w-5 h-5" /> Trailer
-              </button>
             </div>
           </div>
         </div>

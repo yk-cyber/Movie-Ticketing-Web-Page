@@ -37,18 +37,6 @@ export const movies = [
     ]
   },
   {
-    id: "4",
-    title: "Shadows in the Dark",
-    genre: "Horror / Thriller",
-    duration: "105 min",
-    rating: "R",
-    description: "A group of friends visiting an abandoned cabin in the woods discover an ancient evil that won't let them leave.",
-    poster: "https://images.unsplash.com/photo-1543781284-e91b2496a7dd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxob3Jyb3J8ZW58MHx8fHwxNzc0ODYxNTYzfDA&ixlib=rb-4.1.0&q=80&w=1080",
-    showtimes: [
-      { id: "s5", cinema: "Cineplex Grand", date: "Today", times: ["8:00 PM", "10:30 PM", "11:59 PM"] }
-    ]
-  },
-  {
     id: "5",
     title: "The Final Act",
     genre: "Drama",
