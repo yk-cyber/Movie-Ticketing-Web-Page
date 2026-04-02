@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 
 export default defineConfig({
-  base: "/movie-ticketing-web-page/",
+  base: '/movie-ticketing-web-page/',
   plugins: [
     react(),
     tailwindcss(),
