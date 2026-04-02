@@ -49,9 +49,8 @@ export const Login = () => {
             />
           </div>
           <div>
-            <div className="flex justify-between items-center mb-1.5">
+            <div className="mb-1.5">
               <label className="block text-sm font-medium text-zinc-300" htmlFor="password">Password</label>
-              <a href="#" className="text-sm text-red-500 hover:text-red-400">Forgot?</a>
             </div>
             <input 
               id="password" 

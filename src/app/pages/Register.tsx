@@ -27,7 +27,7 @@ export const Register = () => {
       <div className="w-full max-w-md bg-zinc-900 border border-zinc-800 rounded-2xl p-8 shadow-2xl">
         <div className="flex flex-col items-center mb-8">
           <Film className="w-12 h-12 text-red-600 mb-4" />
-          <h1 className="text-3xl font-bold tracking-tight text-white">Join CineTick</h1>
+          <h1 className="text-3xl font-bold tracking-tight text-white">Join VisionX Cinema</h1>
           <p className="text-zinc-400 text-sm mt-2">Create an account for the best movie experience.</p>
         </div>
 
