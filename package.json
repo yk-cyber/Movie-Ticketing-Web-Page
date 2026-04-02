@@ -1,16 +1,15 @@
 {
-  "name": "@figma/my-make-file",
   "private": true,
   "name": "movie-ticketing-web-page",
   "version": "0.1.0",
   "homepage": "https://yk-cyber.github.io/movie-ticketing-web-page/",
   "type": "module",
   "scripts": {
-  "dev": "vite",
-  "build": "vite build",
-  "preview": "vite preview",
-  "predeploy": "npm run build",
-  "deploy": "gh-pages -d dist"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@emotion/react": "11.14.0",
