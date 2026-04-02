@@ -13,6 +13,7 @@ export const Checkout = () => {
   const [cvv, setCvv] = useState("");
   const [name, setName] = useState("");
   const [processing, setProcessing] = useState(false);
+  const [error, setError] = useState("");
 
   const totalSeats = booking.seats.reduce((sum, seat) => sum + seat.price, 0);
   const totalFood = booking.food.reduce((sum, item) => sum + (item.price * item.quantity), 0);
@@ -21,10 +22,42 @@ export const Checkout = () => {
 
   const handlePay = (e: React.FormEvent) => {
     e.preventDefault();
-    if (method === "card" && (!cardNumber || !expiry || !cvv || !name)) {
-      alert("Please fill all card details");
-      return;
+    setError("");
+
+    if (method === "card") {
+      if (!name.trim()) {
+        setError("Please enter the name exactly as it appears on your card.");
+        return;
+      }
+      
+      const cleanCardNumber = cardNumber.replace(/\s+/g, "");
+      if (!/^\d{16}$/.test(cleanCardNumber)) {
+        setError("Please enter a valid 16-digit card number.");
+        return;
+      }
+      
+      if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(expiry)) {
+        setError("Please enter a valid expiry date in MM/YY format.");
+        return;
+      }
+      
+      const [month, year] = expiry.split('/');
+      const expiryDate = new Date(2000 + parseInt(year), parseInt(month) - 1);
+      const currentDate = new Date();
+      currentDate.setDate(1); // Set to start of month to compare just month/year
+      currentDate.setHours(0, 0, 0, 0);
+      
+      if (expiryDate < currentDate) {
+         setError("This card has expired.");
+         return;
+      }
+
+      if (!/^\d{3,4}$/.test(cvv)) {
+        setError("Please enter a valid 3 or 4 digit CVV.");
+        return;
+      }
     }
+    
     setProcessing(true);
     // Simulate payment processing
     setTimeout(() => {
@@ -87,6 +120,12 @@ export const Checkout = () => {
                 <Smartphone className="w-6 h-6" /> Touch 'n Go
               </button>
             </div>
+
+            {error && (
+              <div className="bg-red-500/10 border border-red-500/50 text-red-500 p-4 rounded-xl mb-6 text-sm text-center font-medium animate-in fade-in">
+                {error}
+              </div>
+            )}
 
             <form onSubmit={handlePay} className="space-y-6">
               {method === "card" && (
