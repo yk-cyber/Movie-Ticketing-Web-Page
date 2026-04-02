@@ -66,6 +66,33 @@ export const Checkout = () => {
     }, 2000);
   };
 
+  let nameError = "";
+  if (name.length > 0 && name.trim().length === 0) nameError = "Name cannot be empty";
+
+  let cardError = "";
+  const cleanCard = cardNumber.replace(/\s+/g, "");
+  if (cleanCard.length > 0 && cleanCard.length < 16) {
+     cardError = "16 digits required";
+  }
+
+  let expiryError = "";
+  if (expiry.length === 5) {
+      const [month, year] = expiry.split('/');
+      const expiryDate = new Date(2000 + parseInt(year), parseInt(month) - 1);
+      const currentDate = new Date();
+      currentDate.setDate(1); 
+      currentDate.setHours(0, 0, 0, 0);
+      if (expiryDate < currentDate) expiryError = "Expired";
+      else if (parseInt(month) < 1 || parseInt(month) > 12) expiryError = "Invalid month";
+  } else if (expiry.length > 0 && expiry.length < 5) {
+      expiryError = "Incomplete";
+  }
+
+  let cvvError = "";
+  if (cvv.length > 0 && cvv.length < 3) {
+      cvvError = "Min 3 digits";
+  }
+
   if (!booking.movieId) {
     return <div className="flex-1 flex items-center justify-center p-6"><div className="text-center"><h2 className="text-xl font-bold mb-4">No booking in progress</h2><button onClick={() => navigate("/")} className="text-red-500 hover:underline">Return Home</button></div></div>;
   }
@@ -150,25 +177,33 @@ export const Checkout = () => {
                         type="text" 
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        className="w-full bg-black border border-zinc-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all placeholder-zinc-700"
+                        className={`w-full bg-black border rounded-xl px-4 py-3 text-white focus:outline-none transition-all placeholder-zinc-700 ${nameError ? "border-red-500/80 focus:border-red-500 focus:ring-1 focus:ring-red-500" : "border-zinc-800 focus:border-red-600 focus:ring-1 focus:ring-red-600"}`}
                         placeholder="John Doe"
                         required
                       />
+                      {nameError && <p className="text-red-500 text-xs font-semibold mt-1.5 ml-1 animate-in fade-in">{nameError}</p>}
                     </div>
                     <div>
                       <label className="block text-xs font-bold text-zinc-500 uppercase tracking-wider mb-2">Card Number</label>
                       <div className="relative">
                         <CreditCard className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-600" />
-                        <input 
+                          <input 
                           type="text" 
                           value={cardNumber}
-                          onChange={(e) => setCardNumber(e.target.value)}
-                          className="w-full bg-black border border-zinc-800 rounded-xl pl-12 pr-4 py-3 text-white focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all placeholder-zinc-700 font-mono tracking-widest"
+                          onChange={(e) => {
+                            const val = e.target.value.replace(/\D/g, "").substring(0, 16);
+                            const formatted = val.replace(/(\d{4})(?=\d)/g, "$1 ");
+                            setCardNumber(formatted);
+                          }}
+                          pattern="^(\d{4}\s){3}\d{4}$"
+                          title="Please enter a valid 16-digit card number"
+                          className={`w-full bg-black border rounded-xl pl-12 pr-4 py-3 text-white focus:outline-none transition-all placeholder-zinc-700 font-mono tracking-widest ${cardError ? "border-red-500/80 focus:border-red-500 focus:ring-1 focus:ring-red-500" : "border-zinc-800 focus:border-red-600 focus:ring-1 focus:ring-red-600"}`}
                           placeholder="0000 0000 0000 0000"
                           maxLength={19}
                           required
                         />
                       </div>
+                      {cardError && <p className="text-red-500 text-xs font-semibold mt-1.5 ml-1 animate-in fade-in">{cardError}</p>}
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div>
@@ -176,24 +211,39 @@ export const Checkout = () => {
                         <input 
                           type="text" 
                           value={expiry}
-                          onChange={(e) => setExpiry(e.target.value)}
-                          className="w-full bg-black border border-zinc-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all placeholder-zinc-700 font-mono text-center"
+                          onChange={(e) => {
+                            let val = e.target.value.replace(/\D/g, "").substring(0, 4);
+                            if (val.length >= 3) {
+                              val = val.substring(0, 2) + '/' + val.substring(2, 4);
+                            }
+                            setExpiry(val);
+                          }}
+                          pattern="^(0[1-9]|1[0-2])\/\d{2}$"
+                          title="Please enter a valid expiry date in MM/YY format"
+                          className={`w-full bg-black border rounded-xl px-4 py-3 text-white focus:outline-none transition-all placeholder-zinc-700 font-mono text-center ${expiryError ? "border-red-500/80 focus:border-red-500 focus:ring-1 focus:ring-red-500" : "border-zinc-800 focus:border-red-600 focus:ring-1 focus:ring-red-600"}`}
                           placeholder="MM/YY"
                           maxLength={5}
                           required
                         />
+                        {expiryError && <p className="text-red-500 text-xs font-semibold mt-1.5 mx-auto animate-in fade-in">{expiryError}</p>}
                       </div>
                       <div>
                         <label className="block text-xs font-bold text-zinc-500 uppercase tracking-wider mb-2">CVV</label>
                         <input 
                           type="password" 
                           value={cvv}
-                          onChange={(e) => setCvv(e.target.value)}
-                          className="w-full bg-black border border-zinc-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all placeholder-zinc-700 font-mono text-center tracking-widest"
+                          onChange={(e) => {
+                            const val = e.target.value.replace(/\D/g, "").substring(0, 4);
+                            setCvv(val);
+                          }}
+                          pattern="^\d{3,4}$"
+                          title="Please enter a valid 3 or 4 digit CVV"
+                          className={`w-full bg-black border rounded-xl px-4 py-3 text-white focus:outline-none transition-all placeholder-zinc-700 font-mono text-center tracking-widest ${cvvError ? "border-red-500/80 focus:border-red-500 focus:ring-1 focus:ring-red-500" : "border-zinc-800 focus:border-red-600 focus:ring-1 focus:ring-red-600"}`}
                           placeholder="***"
                           maxLength={4}
                           required
                         />
+                        {cvvError && <p className="text-red-500 text-xs font-semibold mt-1.5 mx-auto animate-in fade-in">{cvvError}</p>}
                       </div>
                     </div>
                   </div>
