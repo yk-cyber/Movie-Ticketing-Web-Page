@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { CheckCircle, Download, Home, QrCode } from "lucide-react";
+import { CheckCircle, Download, Home } from "lucide-react";
 import { useAppContext } from "../context";
 
 export const Confirmation = () => {
@@ -87,9 +87,6 @@ Thank you for choosing VisionX Cinema!`;
               </div>
             </div>
 
-            <div className="w-32 h-32 bg-white rounded-xl p-2 flex items-center justify-center mx-auto shadow-inner">
-              <QrCode className="w-full h-full text-black" />
-            </div>
           </div>
         </div>
 

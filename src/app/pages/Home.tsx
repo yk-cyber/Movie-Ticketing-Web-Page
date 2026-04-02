@@ -7,7 +7,7 @@ export const Home = () => {
   const [selectedFilter, setSelectedFilter] = useState<string>("All");
   const location = useLocation();
   
-  const categories = ["All", "Action", "Romance", "Sci-Fi"];
+  const categories = ["All", "Action", "Romance", "Sci-Fi", "Horror", "Drama", "Comedy", "Thriller"];
   
   const searchParams = new URLSearchParams(location.search);
   const searchQuery = searchParams.get("q")?.toLowerCase() || "";
