@@ -9,6 +9,7 @@ import { FoodAndBeverage } from "./pages/FoodAndBeverage";
 import { Checkout } from "./pages/Checkout";
 import { Confirmation } from "./pages/Confirmation";
 import { Profile } from "./pages/Profile";
+import { About } from "./pages/About";
 import { NotFound } from "./pages/NotFound";
 
 export const router = createBrowserRouter([
@@ -25,6 +26,7 @@ export const router = createBrowserRouter([
       { path: "checkout", Component: Checkout },
       { path: "confirmation", Component: Confirmation },
       { path: "profile", Component: Profile },
+      { path: "about", Component: About },
       { path: "*", Component: NotFound },
     ],
   },
