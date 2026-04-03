@@ -7,10 +7,10 @@ import { Coffee, Minus, Plus, ShoppingBag } from "lucide-react";
 export const FoodAndBeverage = () => {
   const navigate = useNavigate();
   const { booking, updateBooking } = useAppContext();
-  
+
   const [cart, setCart] = useState(booking.food || []);
   const [selectedCategory, setSelectedCategory] = useState("Combos");
-  const categories = ["Combos", "Snacks", "Drinks", "View All"];
+  const categories = ["View All"];
 
   const addToCart = (item: typeof foodItems[0]) => {
     setCart(prev => {
@@ -66,41 +66,41 @@ export const FoodAndBeverage = () => {
         </div>
 
         <div className="flex justify-center mb-10">
-           <div className="flex gap-2">
-             {categories.map((filter) => {
-               if (filter === "View All") {
-                 return (
-                   <button 
-                     key={filter} 
-                     onClick={() => navigate("/fb-all")}
-                     className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors bg-zinc-900 border border-zinc-700 text-white hover:bg-zinc-800`}
-                   >
-                     {filter} →
-                   </button>
-                 );
-               }
-               return (
-                 <button 
-                   key={filter} 
-                   onClick={() => setSelectedCategory(filter)}
-                   className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${filter === selectedCategory ? 'bg-red-600 text-white' : 'bg-zinc-900 text-zinc-400 hover:text-white hover:bg-zinc-800'}`}
-                 >
-                   {filter}
-                 </button>
-               )
-             })}
-           </div>
+          <div className="flex gap-2">
+            {categories.map((filter) => {
+              if (filter === "View All") {
+                return (
+                  <button
+                    key={filter}
+                    onClick={() => navigate("/fb-all")}
+                    className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors bg-zinc-900 border border-zinc-700 text-white hover:bg-zinc-800`}
+                  >
+                    {filter} →
+                  </button>
+                );
+              }
+              return (
+                <button
+                  key={filter}
+                  onClick={() => setSelectedCategory(filter)}
+                  className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${filter === selectedCategory ? 'bg-red-600 text-white' : 'bg-zinc-900 text-zinc-400 hover:text-white hover:bg-zinc-800'}`}
+                >
+                  {filter}
+                </button>
+              )
+            })}
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-          
+
           <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6 animate-in fade-in slide-in-from-bottom-4 duration-300">
             {displayedItems.length === 0 ? (
-               <div className="col-span-1 md:col-span-2 text-center py-20 bg-zinc-900/50 border border-zinc-800 border-dashed rounded-3xl">
-                 <Coffee className="w-12 h-12 text-zinc-700 mx-auto mb-4" />
-                 <h3 className="text-xl font-bold text-zinc-300 mb-2">No items found</h3>
-                 <p className="text-zinc-500 mb-6">No {selectedCategory} available at this time.</p>
-               </div>
+              <div className="col-span-1 md:col-span-2 text-center py-20 bg-zinc-900/50 border border-zinc-800 border-dashed rounded-3xl">
+                <Coffee className="w-12 h-12 text-zinc-700 mx-auto mb-4" />
+                <h3 className="text-xl font-bold text-zinc-300 mb-2">No items found</h3>
+                <p className="text-zinc-500 mb-6">No {selectedCategory} available at this time.</p>
+              </div>
             ) : (
               displayedItems.map(item => {
                 const cartItem = cart.find(i => i.id === item.id);
@@ -119,7 +119,7 @@ export const FoodAndBeverage = () => {
                     </div>
                     <div className="p-6">
                       <p className="text-zinc-400 text-sm mb-6 h-10">{item.description}</p>
-                      
+
                       {cartItem ? (
                         <div className="flex items-center justify-between bg-zinc-950 border border-zinc-800 rounded-xl p-2">
                           <button onClick={() => removeFromCart(item.id)} className="w-10 h-10 rounded-lg bg-zinc-800 hover:bg-red-600 text-white flex items-center justify-center transition-colors">
@@ -145,7 +145,7 @@ export const FoodAndBeverage = () => {
           <div className="lg:col-span-1">
             <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 sticky top-24 shadow-2xl">
               <h3 className="text-xl font-bold mb-6 border-b border-zinc-800 pb-4 text-white">Your Order</h3>
-              
+
               <div className="space-y-6">
                 <div className="mb-6">
                   <h4 className="text-sm font-bold text-zinc-500 uppercase tracking-wider mb-3">Tickets</h4>
@@ -179,7 +179,7 @@ export const FoodAndBeverage = () => {
                     <span className="text-red-200 font-medium">Grand Total</span>
                     <span className="text-3xl font-bold text-white">MYR {(totalSeats + totalFood).toFixed(2)}</span>
                   </div>
-                  
+
                   <button
                     onClick={handleContinue}
                     className="w-full py-4 rounded-xl font-bold text-lg bg-red-600 hover:bg-red-700 text-white shadow-lg shadow-red-900/30 transition-all flex items-center justify-center gap-2"

@@ -259,9 +259,19 @@ export const Checkout = () => {
 
               {method === "tng" && (
                 <div className="animate-in fade-in zoom-in duration-300 bg-[#004a99]/10 border border-[#004a99]/30 rounded-xl p-8 text-center text-zinc-300">
-                  <Smartphone className="w-12 h-12 mx-auto mb-4 text-[#004a99]" />
+                  <div className="bg-white p-3 inline-block rounded-xl mb-4 shadow-[0_0_20px_rgba(0,74,153,0.3)]">
+                    <img 
+                      src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=visionx-payment-${grandTotal}&color=000000`} 
+                      alt="Touch 'n Go QR Code" 
+                      className="w-32 h-32"
+                    />
+                  </div>
                   <p className="font-medium text-white mb-2">Touch 'n Go eWallet</p>
                   <p className="text-sm text-zinc-400">Open your Touch 'n Go eWallet app and scan the QR code to proceed with payment.</p>
+                  <div className="mt-4 inline-flex items-center justify-center gap-2 bg-black/40 px-4 py-2 rounded-full border border-white/5">
+                    <span className="text-zinc-400 text-sm">Amount:</span>
+                    <span className="text-white font-bold">MYR {grandTotal.toFixed(2)}</span>
+                  </div>
                 </div>
               )}
 
