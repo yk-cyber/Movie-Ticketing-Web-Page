@@ -7,16 +7,16 @@ export const Home = () => {
   const [selectedFilter, setSelectedFilter] = useState<string>("Action");
   const location = useLocation();
   const navigate = useNavigate();
-  
-  const categories = ["Action", "Romance", "Sci-Fi", "Drama", "Comedy", "Thriller", "All"];
-  
+
+  const categories = ["All"];
+
   const searchParams = new URLSearchParams(location.search);
   const searchQuery = searchParams.get("q")?.toLowerCase() || "";
 
   const filteredMovies = movies.filter(movie => {
     const matchesFilter = selectedFilter === "All" || movie.genre.includes(selectedFilter);
-    const matchesSearch = searchQuery === "" || 
-      movie.title.toLowerCase().includes(searchQuery) || 
+    const matchesSearch = searchQuery === "" ||
+      movie.title.toLowerCase().includes(searchQuery) ||
       movie.genre.toLowerCase().includes(searchQuery);
     return matchesFilter && matchesSearch;
   });
@@ -26,18 +26,18 @@ export const Home = () => {
       {/* Hero Section */}
       <section className="relative h-[65vh] w-full flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
-          <img 
-            src={movies[0].poster} 
-            alt="Hero background" 
+          <img
+            src={movies[0].poster}
+            alt="Hero background"
             className="w-full h-full object-cover opacity-40 blur-sm scale-105"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black via-zinc-950/60 to-transparent" />
         </div>
-        
+
         <div className="relative z-10 max-w-7xl mx-auto px-6 w-full flex flex-col md:flex-row items-center gap-12">
-          <img 
-            src={movies[0].poster} 
-            alt={movies[0].title} 
+          <img
+            src={movies[0].poster}
+            alt={movies[0].title}
             className="w-64 md:w-80 rounded-2xl shadow-2xl shadow-red-900/20 hidden md:block"
           />
           <div className="text-white max-w-2xl">
@@ -71,14 +71,14 @@ export const Home = () => {
               {searchQuery ? `Found ${filteredMovies.length} movies` : "Book tickets for the hottest movies in town."}
             </p>
           </div>
-          
+
           {!searchQuery && (
             <div className="hidden md:flex gap-2">
               {categories.map((filter) => {
                 if (filter === "All") {
                   return (
-                    <button 
-                      key={filter} 
+                    <button
+                      key={filter}
                       onClick={() => navigate("/movies")}
                       className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors bg-zinc-900 border border-zinc-700 text-white hover:bg-zinc-800`}
                     >
@@ -87,8 +87,8 @@ export const Home = () => {
                   );
                 }
                 return (
-                  <button 
-                    key={filter} 
+                  <button
+                    key={filter}
                     onClick={() => setSelectedFilter(filter)}
                     className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${filter === selectedFilter ? 'bg-red-600 text-white' : 'bg-zinc-900 text-zinc-400 hover:text-white hover:bg-zinc-800'}`}
                   >
@@ -112,9 +112,9 @@ export const Home = () => {
             {filteredMovies.map((movie) => (
               <Link key={movie.id} to={`/movie/${movie.id}`} className="group">
                 <div className="relative aspect-[2/3] rounded-xl overflow-hidden mb-4 bg-zinc-900">
-                  <img 
-                    src={movie.poster} 
-                    alt={movie.title} 
+                  <img
+                    src={movie.poster}
+                    alt={movie.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                   />
                   <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
