@@ -66,6 +66,7 @@ export const foodItems = [
   {
     id: "f1",
     name: "Classic Popcorn Combo",
+    category: "Combos",
     description: "1 Large Popcorn + 2 Regular Drinks",
     price: 15.00,
     image: "https://images.unsplash.com/photo-1695866648647-ab341ee14b7c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080"
@@ -73,8 +74,41 @@ export const foodItems = [
   {
     id: "f2",
     name: "Solo Snack Saver",
+    category: "Combos",
     description: "1 Regular Popcorn + 1 Regular Drink",
     price: 9.50,
     image: "https://images.unsplash.com/photo-1442975579382-43b9ca83de07?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080"
+  },
+  {
+    id: "f3",
+    name: "Spicy Nachos",
+    category: "Snacks",
+    description: "Crispy nachos with jalapeños and warm cheese dip",
+    price: 8.00,
+    image: "https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080"
+  },
+  {
+    id: "f4",
+    name: "Large Caramel Popcorn",
+    category: "Snacks",
+    description: "Freshly popped, coated in rich caramel",
+    price: 7.50,
+    image: "https://images.unsplash.com/photo-1585647347483-22b66260dfff?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080"
+  },
+  {
+    id: "f5",
+    name: "Fountain Cola",
+    category: "Drinks",
+    description: "Large thirst-quenching cola over ice",
+    price: 4.50,
+    image: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080"
+  },
+  {
+    id: "f6",
+    name: "Iced Lemon Tea",
+    category: "Drinks",
+    description: "Refreshing iced tea with a twist of lemon",
+    price: 4.00,
+    image: "https://images.unsplash.com/photo-1556679343-c7306c1976bc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080"
   }
 ];

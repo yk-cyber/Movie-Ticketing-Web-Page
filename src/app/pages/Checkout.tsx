@@ -99,12 +99,12 @@ export const Checkout = () => {
 
   return (
     <div className="w-full bg-black flex-1 py-12">
-      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <div className="max-w-3xl mx-auto px-6">
         
         {/* Payment Form */}
-        <div className="lg:col-span-1">
-          <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors mb-8 text-sm font-medium">
-            <ArrowLeft className="w-4 h-4" /> Back to Cart
+        <div className="w-full">
+          <button onClick={() => navigate("/summary")} className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors mb-8 text-sm font-medium">
+            <ArrowLeft className="w-4 h-4" /> Back to Summary
           </button>
           
           <h2 className="text-3xl font-bold text-white mb-8">Secure Checkout</h2>
@@ -287,63 +287,6 @@ export const Checkout = () => {
                 Secure connection via 256-bit SSL encryption.
               </p>
             </form>
-          </div>
-        </div>
-
-        {/* Order Summary */}
-        <div className="lg:col-span-1">
-          <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 sticky top-24 shadow-2xl">
-            <h3 className="text-xl font-bold mb-8 text-white flex items-center gap-3 border-b border-zinc-800 pb-6">
-              <Film className="w-6 h-6 text-red-500" /> Booking Summary
-            </h3>
-            
-            <div className="flex gap-6 mb-8 bg-black/40 p-4 rounded-2xl border border-zinc-800/50">
-              <img src={booking.poster} alt={booking.movieTitle} className="w-24 rounded-lg shadow-md" />
-              <div>
-                <h4 className="font-bold text-lg text-white mb-2">{booking.movieTitle}</h4>
-                <p className="text-sm text-zinc-400 mb-1">{booking.cinema}</p>
-                <p className="text-sm text-zinc-400">{booking.date} • {booking.time}</p>
-              </div>
-            </div>
-
-            <div className="space-y-6 text-sm">
-              <div className="border-b border-zinc-800 pb-6 space-y-4">
-                <h5 className="font-bold text-zinc-500 uppercase tracking-wider mb-4">Tickets</h5>
-                {booking.seats.map(seat => (
-                  <div key={seat.id} className="flex justify-between text-zinc-300">
-                    <span>Seat {seat.id} ({seat.type})</span>
-                    <span>MYR {seat.price.toFixed(2)}</span>
-                  </div>
-                ))}
-              </div>
-
-              {booking.food.length > 0 && (
-                <div className="border-b border-zinc-800 pb-6 space-y-4">
-                  <h5 className="font-bold text-zinc-500 uppercase tracking-wider mb-4">Food & Beverage</h5>
-                  {booking.food.map(item => (
-                    <div key={item.id} className="flex justify-between text-zinc-300">
-                      <span>{item.quantity}x {item.name}</span>
-                      <span>MYR {(item.price * item.quantity).toFixed(2)}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              <div className="pt-2 space-y-4">
-                <div className="flex justify-between text-zinc-400">
-                  <span>Subtotal</span>
-                  <span>MYR {(totalSeats + totalFood).toFixed(2)}</span>
-                </div>
-                <div className="flex justify-between text-zinc-400">
-                  <span>Taxes & Fees (8%)</span>
-                  <span>MYR {tax.toFixed(2)}</span>
-                </div>
-                <div className="flex justify-between items-center pt-6 mt-6 border-t border-zinc-800">
-                  <span className="text-lg font-bold text-white">Total Amount</span>
-                  <span className="text-3xl font-bold text-red-500">MYR {grandTotal.toFixed(2)}</span>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>

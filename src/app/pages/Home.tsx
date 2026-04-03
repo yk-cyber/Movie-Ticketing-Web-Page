@@ -1,13 +1,14 @@
-import { Link, useLocation } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { movies } from "../data";
 import { PlayCircle, Star, Clock, SearchX } from "lucide-react";
 import { useState } from "react";
 
 export const Home = () => {
-  const [selectedFilter, setSelectedFilter] = useState<string>("All");
+  const [selectedFilter, setSelectedFilter] = useState<string>("Action");
   const location = useLocation();
+  const navigate = useNavigate();
   
-  const categories = ["All", "Action", "Romance", "Sci-Fi", "Drama", "Comedy", "Thriller"];
+  const categories = ["Action", "Romance", "Sci-Fi", "Drama", "Comedy", "Thriller", "All"];
   
   const searchParams = new URLSearchParams(location.search);
   const searchQuery = searchParams.get("q")?.toLowerCase() || "";
@@ -73,15 +74,28 @@ export const Home = () => {
           
           {!searchQuery && (
             <div className="hidden md:flex gap-2">
-              {categories.map((filter) => (
-                <button 
-                  key={filter} 
-                  onClick={() => setSelectedFilter(filter)}
-                  className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${filter === selectedFilter ? 'bg-red-600 text-white' : 'bg-zinc-900 text-zinc-400 hover:text-white hover:bg-zinc-800'}`}
-                >
-                  {filter}
-                </button>
-              ))}
+              {categories.map((filter) => {
+                if (filter === "All") {
+                  return (
+                    <button 
+                      key={filter} 
+                      onClick={() => navigate("/movies")}
+                      className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors bg-zinc-900 border border-zinc-700 text-white hover:bg-zinc-800`}
+                    >
+                      {filter} →
+                    </button>
+                  );
+                }
+                return (
+                  <button 
+                    key={filter} 
+                    onClick={() => setSelectedFilter(filter)}
+                    className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${filter === selectedFilter ? 'bg-red-600 text-white' : 'bg-zinc-900 text-zinc-400 hover:text-white hover:bg-zinc-800'}`}
+                  >
+                    {filter}
+                  </button>
+                )
+              })}
             </div>
           )}
         </div>

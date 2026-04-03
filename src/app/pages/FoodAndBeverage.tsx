@@ -9,6 +9,8 @@ export const FoodAndBeverage = () => {
   const { booking, updateBooking } = useAppContext();
   
   const [cart, setCart] = useState(booking.food || []);
+  const [selectedCategory, setSelectedCategory] = useState("Combos");
+  const categories = ["Combos", "Snacks", "Drinks", "View All"];
 
   const addToCart = (item: typeof foodItems[0]) => {
     setCart(prev => {
@@ -31,15 +33,24 @@ export const FoodAndBeverage = () => {
   };
 
   const totalFood = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  const totalSeats = booking.seats.reduce((sum, seat) => sum + seat.price, 0);
+  const totalSeats = booking.seats?.reduce((sum, seat) => sum + seat.price, 0) || 0;
 
   const handleContinue = () => {
     updateBooking({ food: cart });
-    navigate("/checkout");
+    navigate("/summary");
   };
 
+  const displayedItems = foodItems.filter(i => i.category === selectedCategory);
+
   if (!booking.movieId) {
-    return <div className="flex-1 flex items-center justify-center p-6"><div className="text-center"><h2 className="text-xl font-bold mb-4">No booking in progress</h2><button onClick={() => navigate("/")} className="text-red-500 hover:underline">Return Home</button></div></div>;
+    return (
+      <div className="flex-1 flex items-center justify-center p-6">
+        <div className="text-center">
+          <h2 className="text-xl font-bold mb-4">No booking in progress</h2>
+          <button onClick={() => navigate("/")} className="text-red-500 hover:underline">Return Home</button>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -54,62 +65,96 @@ export const FoodAndBeverage = () => {
           </p>
         </div>
 
+        <div className="flex justify-center mb-10">
+           <div className="flex gap-2">
+             {categories.map((filter) => {
+               if (filter === "View All") {
+                 return (
+                   <button 
+                     key={filter} 
+                     onClick={() => navigate("/fb-all")}
+                     className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors bg-zinc-900 border border-zinc-700 text-white hover:bg-zinc-800`}
+                   >
+                     {filter} →
+                   </button>
+                 );
+               }
+               return (
+                 <button 
+                   key={filter} 
+                   onClick={() => setSelectedCategory(filter)}
+                   className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${filter === selectedCategory ? 'bg-red-600 text-white' : 'bg-zinc-900 text-zinc-400 hover:text-white hover:bg-zinc-800'}`}
+                 >
+                   {filter}
+                 </button>
+               )
+             })}
+           </div>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           
-          {/* F&B Items */}
-          <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
-            {foodItems.map(item => {
-              const cartItem = cart.find(i => i.id === item.id);
-              return (
-                <div key={item.id} className="bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden shadow-2xl group hover:border-zinc-700 transition-all">
-                  <div className="h-48 relative overflow-hidden">
-                    <img src={item.image} alt={item.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 to-transparent opacity-80" />
-                    <div className="absolute bottom-4 left-4 right-4 flex justify-between items-end">
-                      <h3 className="font-bold text-xl text-white drop-shadow-md">{item.name}</h3>
-                      <span className="bg-red-600 text-white font-bold px-3 py-1 rounded-full shadow-lg">MYR {item.price.toFixed(2)}</span>
+          <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6 animate-in fade-in slide-in-from-bottom-4 duration-300">
+            {displayedItems.length === 0 ? (
+               <div className="col-span-1 md:col-span-2 text-center py-20 bg-zinc-900/50 border border-zinc-800 border-dashed rounded-3xl">
+                 <Coffee className="w-12 h-12 text-zinc-700 mx-auto mb-4" />
+                 <h3 className="text-xl font-bold text-zinc-300 mb-2">No items found</h3>
+                 <p className="text-zinc-500 mb-6">No {selectedCategory} available at this time.</p>
+               </div>
+            ) : (
+              displayedItems.map(item => {
+                const cartItem = cart.find(i => i.id === item.id);
+                return (
+                  <div key={item.id} className="bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden shadow-2xl group hover:border-zinc-700 transition-all">
+                    <div className="h-48 relative overflow-hidden">
+                      <img src={item.image} alt={item.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 to-transparent opacity-80" />
+                      <div className="absolute top-3 right-3 text-xs font-bold px-2 py-1 bg-black/60 text-white rounded-md backdrop-blur-sm shadow">
+                        {item.category}
+                      </div>
+                      <div className="absolute bottom-4 left-4 right-4 flex justify-between items-end">
+                        <h3 className="font-bold text-xl text-white drop-shadow-md">{item.name}</h3>
+                        <span className="bg-red-600 text-white font-bold px-3 py-1 rounded-full shadow-lg">MYR {item.price.toFixed(2)}</span>
+                      </div>
+                    </div>
+                    <div className="p-6">
+                      <p className="text-zinc-400 text-sm mb-6 h-10">{item.description}</p>
+                      
+                      {cartItem ? (
+                        <div className="flex items-center justify-between bg-zinc-950 border border-zinc-800 rounded-xl p-2">
+                          <button onClick={() => removeFromCart(item.id)} className="w-10 h-10 rounded-lg bg-zinc-800 hover:bg-red-600 text-white flex items-center justify-center transition-colors">
+                            <Minus className="w-4 h-4" />
+                          </button>
+                          <span className="font-bold text-lg text-white w-12 text-center">{cartItem.quantity}</span>
+                          <button onClick={() => addToCart(item)} className="w-10 h-10 rounded-lg bg-zinc-800 hover:bg-green-600 text-white flex items-center justify-center transition-colors">
+                            <Plus className="w-4 h-4" />
+                          </button>
+                        </div>
+                      ) : (
+                        <button onClick={() => addToCart(item)} className="w-full py-3.5 rounded-xl font-bold bg-zinc-800 hover:bg-zinc-700 text-white transition-colors flex items-center justify-center gap-2">
+                          <ShoppingBag className="w-4 h-4" /> Add to Order
+                        </button>
+                      )}
                     </div>
                   </div>
-                  <div className="p-6">
-                    <p className="text-zinc-400 text-sm mb-6 h-10">{item.description}</p>
-                    
-                    {cartItem ? (
-                      <div className="flex items-center justify-between bg-zinc-950 border border-zinc-800 rounded-xl p-2">
-                        <button onClick={() => removeFromCart(item.id)} className="w-10 h-10 rounded-lg bg-zinc-800 hover:bg-red-600 text-white flex items-center justify-center transition-colors">
-                          <Minus className="w-4 h-4" />
-                        </button>
-                        <span className="font-bold text-lg text-white w-12 text-center">{cartItem.quantity}</span>
-                        <button onClick={() => addToCart(item)} className="w-10 h-10 rounded-lg bg-zinc-800 hover:bg-green-600 text-white flex items-center justify-center transition-colors">
-                          <Plus className="w-4 h-4" />
-                        </button>
-                      </div>
-                    ) : (
-                      <button onClick={() => addToCart(item)} className="w-full py-3.5 rounded-xl font-bold bg-zinc-800 hover:bg-zinc-700 text-white transition-colors flex items-center justify-center gap-2">
-                        <ShoppingBag className="w-4 h-4" /> Add to Order
-                      </button>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })
+            )}
           </div>
 
-          {/* Sidebar Summary */}
           <div className="lg:col-span-1">
             <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 sticky top-24 shadow-2xl">
               <h3 className="text-xl font-bold mb-6 border-b border-zinc-800 pb-4 text-white">Your Order</h3>
               
               <div className="space-y-6">
-                {/* Tickets Summary (read-only) */}
                 <div className="mb-6">
                   <h4 className="text-sm font-bold text-zinc-500 uppercase tracking-wider mb-3">Tickets</h4>
                   <div className="flex justify-between items-center text-sm mb-2">
-                    <span className="text-zinc-300">{booking.seats.length}x Seats Selected</span>
+                    <span className="text-zinc-300">{booking.seats?.length || 0}x Seats Selected</span>
                     <span className="text-white font-medium">MYR {totalSeats.toFixed(2)}</span>
                   </div>
                 </div>
 
-                {/* Food Summary */}
                 <div>
                   <h4 className="text-sm font-bold text-zinc-500 uppercase tracking-wider mb-3">Food & Beverage</h4>
                   {cart.length === 0 ? (
@@ -144,7 +189,7 @@ export const FoodAndBeverage = () => {
                   <button
                     onClick={() => {
                       updateBooking({ food: [] });
-                      navigate("/checkout");
+                      navigate("/summary");
                     }}
                     className="w-full py-3 mt-3 rounded-xl font-bold text-sm bg-transparent border border-zinc-700 hover:bg-zinc-800 hover:border-zinc-600 text-zinc-300 transition-all"
                   >
