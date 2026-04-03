@@ -9,8 +9,8 @@ export const Footer = () => {
             <Film className="w-6 h-6 text-red-600" />
             <span>VisionX Cinema</span>
           </div>
-          <p className="text-sm text-zinc-500 max-w-xs">
-            Experience the magic of cinema with seamless ticketing and unbeatable comfort.
+          <p className="text-sm text-zinc-400 max-w-xs leading-relaxed">
+            Welcome to VisionX Cinema, your premier destination for blockbuster entertainment. We bring you the latest movies with state-of-the-art IMAX technology, luxurious VIP seating, and a breathtaking immersive audio experience.
           </p>
         </div>
         
