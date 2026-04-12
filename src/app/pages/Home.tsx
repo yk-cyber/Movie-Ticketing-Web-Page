@@ -61,19 +61,19 @@ export const Home = () => {
       </section>
 
       {/* Movies List */}
-      <section className="max-w-7xl mx-auto px-6 py-20">
-        <div className="flex items-end justify-between mb-10">
+      <section className="max-w-7xl mx-auto px-6 py-10">
+        <div className="flex flex-col gap-6 mb-8">
           <div>
-            <h2 className="text-3xl font-bold tracking-tight mb-2 text-white">
+            <h2 className="text-2xl font-bold tracking-tight mb-2 text-white">
               {searchQuery ? `Search Results for "${searchQuery}"` : "Trending Now"}
             </h2>
-            <p className="text-zinc-500">
+            <p className="text-zinc-500 text-sm">
               {searchQuery ? `Found ${filteredMovies.length} movies` : "Book tickets for the hottest movies in town."}
             </p>
           </div>
 
           {!searchQuery && (
-            <div className="hidden md:flex gap-2">
+            <div className="flex flex-wrap gap-2">
               {categories.map((filter) => {
                 if (filter === "All") {
                   return (
